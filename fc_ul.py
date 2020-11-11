@@ -7,7 +7,7 @@ import numpy as np
 from scipy.stats import poisson
 
 
-def get_limits_n(mu, b, x, table):
+def get_limits_n(mu, b, x, table, alpha=0.9):
     """Calculate n bounds for a given mu following FC algorithm."""
     # Calculate poissonian probability of n given mu
     P_n_mu = poisson(mu + b).pmf(x)
@@ -23,7 +23,7 @@ def get_limits_n(mu, b, x, table):
     # Find the first index where cumulative sum of row > alpha
     sumRow = np.cumsum(row)
     for i, val in enumerate(sumRow):
-        if val > 0.9:
+        if val > alpha:
             break
 
     n_that_pass = n[:i+1]
@@ -51,7 +51,7 @@ def getPoisson_UL_FC(b, n_obs, alpha=0.9, threshold=0.001):
 
     done = False
     while not done:
-        lowerN, upperN = get_limits_n(mu, b, x, table)
+        lowerN, upperN = get_limits_n(mu, b, x, table, alpha)
 
         # Be wary of edge effects
         if upperN >= x[-2]:
