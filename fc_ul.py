@@ -1,3 +1,8 @@
+"""
+Calculate FC upper limits in a poisson experiment.
+
+Validated against ROOT TFeldmanCousins :-) Use the function getPoisson_UL_FC.
+"""
 import numpy as np
 from scipy.stats import poisson
 
@@ -36,7 +41,7 @@ def get_table(x, b):
     return table
 
 
-def getPoisson_UL_FC(n_obs, b, alpha=0.9, threshold=0.001):
+def getPoisson_UL_FC(b, n_obs, alpha=0.9, threshold=0.001):
     """Calculate a FC upper limit for n_obs observed and b background."""
     # Start at mu = 0, x = np.arange(15)
     mu = 0.
